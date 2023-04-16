@@ -13,9 +13,11 @@ const int ARR_SIZE = 32 * 1024 * 1024;
 __global__ void scan_and_write_part_sum_kernel(const int32_t* input, int32_t* part, int32_t* output, size_t n, size_t part_num) {
     
     for (size_t part_i = blockIdx.x; part_i < part_num; part_i += gridDim.x) {
+        // calculate for each block start and end index
         size_t part_begin = part_i * blockDim.x;
         size_t part_end = min((part_i + 1) * blockDim.x, n);
         if (threadIdx.x == 0) {
+            // only thread 0 calculate the sum of each input
             int32_t acc = 0;
             for (size_t i = part_begin; i < part_end; i++) {
                 acc += input[i];
@@ -27,6 +29,7 @@ __global__ void scan_and_write_part_sum_kernel(const int32_t* input, int32_t* pa
 }
 
 __global__ void scan_part_sum_kernel(int32_t* part, size_t part_num) {
+    // calcute the total sum of input
     int32_t acc = 0;
     for (size_t i = 0; i < part_num; i++) {
         acc += part[i];
@@ -35,6 +38,7 @@ __global__ void scan_part_sum_kernel(int32_t* part, size_t part_num) {
 }
 
 __global__ void add_base_sum_kernel(int32_t* part, int32_t* output, size_t n, size_t part_num) {
+    // add part sum for each index
     for (size_t part_i = blockIdx.x; part_i < part_num; part_i += gridDim.x) {
         if (part_i == 0) {
             continue;
