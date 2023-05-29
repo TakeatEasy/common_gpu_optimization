@@ -1,3 +1,5 @@
+// Copied from https://github.com/Cjkkkk/CUDA_gemm/blob/14b517370609d322647c55fe9136b6d81c2ba9a7/src/cpp/include/csr.hpp
+
 #pragma once
 
 #include <stdlib.h>

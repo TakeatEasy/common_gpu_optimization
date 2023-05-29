@@ -2,14 +2,15 @@
 
 #include <iostream>
 #include "Bcsr.hpp"
-#include "Csr.hpp"
+// #include "Csr.hpp"
 #include <type_traits>
+#include "cuda_help_func.hpp"
 
-void cal_block(Bcsr *, float *);
+;void cal_block(Bcsr *, float *);
 void generate_bcsr(Bcsr *, float *);
 
-void cal_nnz(Csr *, float *);
-void generate_csr(Csr *, float *);
+// void cal_nnz(Csr *, float *);
+// void generate_csr(Csr *, float *);
 
 void genRandomMatrix(float *A, int M, int N);
 void FillMatrix(float *A, float num, int M, int N);
@@ -69,37 +70,37 @@ void generate_bcsr(Bcsr *mat, float *data)
     }
 }
 
-void cal_nnz(Csr *mat, float *data)
-{
-    for (int i = 0; i < mat->m * mat->n; i++)
-    {
-        if (data[i] != 0)
-        {
-            mat->nnz_num += 1;
-        }
-    }
-}
+// void cal_nnz(Csr *mat, float *data)
+// {
+//     for (int i = 0; i < mat->m * mat->n; i++)
+//     {
+//         if (data[i] != 0)
+//         {
+//             mat->nnz_num += 1;
+//         }
+//     }
+// }
 
-void generate_csr(Csr *mat, float *data)
-{
-    int ptr = 0;
-    int row_ptr = 0;
-    mat->row_ptr[row_ptr++] = ptr;
-    for (int i = 0; i < mat->m; i += 1)
-    {
-        for (int j = 0; j < mat->n; j += 1)
-        {
-            if (data[i * mat->n + j] != 0)
-            {
-                mat->col_idx[ptr] = j;
-                mat->val[ptr] = data[i * mat->n + j];
-                ptr++;
-            }
-        }
-        // 记录row_ptr
-        mat->row_ptr[row_ptr++] = ptr;
-    }
-}
+// void generate_csr(Csr *mat, float *data)
+// {
+//     int ptr = 0;
+//     int row_ptr = 0;
+//     mat->row_ptr[row_ptr++] = ptr;
+//     for (int i = 0; i < mat->m; i += 1)
+//     {
+//         for (int j = 0; j < mat->n; j += 1)
+//         {
+//             if (data[i * mat->n + j] != 0)
+//             {
+//                 mat->col_idx[ptr] = j;
+//                 mat->val[ptr] = data[i * mat->n + j];
+//                 ptr++;
+//             }
+//         }
+//         // 记录row_ptr
+//         mat->row_ptr[row_ptr++] = ptr;
+//     }
+// }
 
 void genRandomMatrix(float *A, int M, int N)
 {
