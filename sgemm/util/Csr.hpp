@@ -1,0 +1,46 @@
+#pragma once
+
+#include <stdlib.h>
+#include <cstdio>
+
+class Csr
+{
+public:
+    float *val;
+    int *col_idx;
+    int *row_ptr;
+    int m, n, nnz_num;
+
+    Csr(int m, int n) : m(m), n(n)
+    {
+        nnz_num = 0;
+        val = NULL;
+        col_idx = NULL;
+        row_ptr = NULL;
+    }
+
+    ~Csr()
+    {
+        if (val != NULL)
+            free(val);
+        if (col_idx != NULL)
+            free(col_idx);
+        if (row_ptr != NULL)
+            free(row_ptr);
+    }
+
+    void print()
+    {
+        printf("row_ptr: \n");
+        for (int i = 0; i < m + 1; i++)
+        {
+            printf("%d ", row_ptr[i]);
+        }
+        printf("\n");
+        printf("col_idx: \n");
+        for (int i = 0; i < nnz_num; i++)
+        {
+            printf("%d ", col_idx[i]);
+        }
+    }
+};
